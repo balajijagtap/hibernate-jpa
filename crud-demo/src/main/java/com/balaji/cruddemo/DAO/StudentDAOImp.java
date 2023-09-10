@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class StudentDAOImp implements StudentDAO {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public StudentDAOImp(EntityManager entityManager){
@@ -34,5 +34,11 @@ public class StudentDAOImp implements StudentDAO {
     public List<Student> findAll() {
         TypedQuery<Student> typedQuery = this.entityManager.createQuery("From Student", Student.class);
         return typedQuery.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void updateStudent(Student student) {
+        this.entityManager.merge(student);
     }
 }

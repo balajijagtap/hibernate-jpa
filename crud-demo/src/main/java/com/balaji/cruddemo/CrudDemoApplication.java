@@ -18,10 +18,18 @@ public class CrudDemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
 		return runner -> {
-			createStudent(studentDAO);
+			//createStudent(studentDAO);
 			//readStudent(studentDAO, 1);
-			getStudents(studentDAO);
+			//getStudents(studentDAO);
+			updateStudent(studentDAO);
 		};
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		Student student = readStudent(studentDAO, 1);
+		student.setFirstName("bills");
+		studentDAO.updateStudent(student);
+		getStudents(studentDAO);
 	}
 
 	private void getStudents(StudentDAO studentDAO) {
@@ -31,8 +39,8 @@ public class CrudDemoApplication {
 		}
 	}
 
-	private void readStudent(StudentDAO studentDAO, int id) {
-		System.out.println("retrived student: " + studentDAO.readById(id));
+	private Student readStudent(StudentDAO studentDAO, int id) {
+		return studentDAO.readById(id);
 	}
 
 	private void createStudent(StudentDAO studentDAO){
